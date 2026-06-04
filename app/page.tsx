@@ -1,8 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-white">
+      <Navbar />
       <section className="mx-auto flex min-h-[88vh] max-w-6xl flex-col items-center justify-center px-6 pt-20 pb-16 text-center">
       
           <Image
@@ -28,21 +32,14 @@ export default function Home() {
   de personas, profesionales y pequeñas empresas.
         </p>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <a
-            href="#servicios"
-            className="rounded-full bg-sky-500 px-8 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
-          >
-            Ver servicios
-          </a>
-
-          <a
-            href="#contacto"
-            className="rounded-full border border-slate-600 px-8 py-3 font-semibold text-white transition hover:border-sky-400 hover:text-sky-400"
-          >
-            Contactar
-          </a>
-        </div>
+<div className="mt-10 flex justify-center">
+<Link
+  href="/contacto"
+  className="rounded-full bg-sky-500 px-8 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
+>
+  Contáctame
+</Link>
+</div>
         <div className="mt-10">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
             Stack en Práctica
@@ -94,6 +91,7 @@ export default function Home() {
       para personas, profesionales y pequeñas empresas.
     </p>
   </div>
+  
 </div>
       </section>
     </main>
