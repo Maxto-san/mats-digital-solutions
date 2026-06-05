@@ -19,6 +19,9 @@ const [apellidoMaterno, setApellidoMaterno] = useState<string>("");
 const [servicio, setServicio] = useState<string>("");
 const [servicioFueTocado, setServicioFueTocado] = useState(false);
 const [formularioEnviado, setFormularioEnviado] = useState(false);
+const [estaEnviando, setEstaEnviando] = useState(false);
+const [errorEnvio, setErrorEnvio] = useState("");
+
 
     
     const mensajeEstaVacio = mensaje.trim().length === 0;
@@ -46,31 +49,58 @@ const [formularioEnviado, setFormularioEnviado] = useState(false);
       servicioEstaVacio ||
       mensajeEstaVacio;
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        
-        setFormularioEnviado(false);
+async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  event.preventDefault();
 
-        setNombresFueTocado(true);
-        setEmailFueTocado(true);
-        setServicioFueTocado(true);
-        setMensajeFueTocado(true);
+  setFormularioEnviado(false);
+  setErrorEnvio("");
 
-        if (formularioTieneErrores) {
-            return;
-        }
+  setNombresFueTocado(true);
+  setEmailFueTocado(true);
+  setServicioFueTocado(true);
+  setMensajeFueTocado(true);
 
-        const contacto = {
-            nombres: nombres.trim(),
-            apellidoPaterno: apellidoPaterno.trim(),
-            apellidoMaterno: apellidoMaterno.trim(),
-            email: emailLimpio,
-            servicio: servicio,
-            mensaje: mensaje.trim(),
-        };
-        console.log("Formulario válido", contacto);
-        setFormularioEnviado(true);
+  if (formularioTieneErrores) {
+    return;
+  }
+
+  const contacto = {
+    nombres: nombres.trim(),
+    apellidoPaterno: apellidoPaterno.trim(),
+    apellidoMaterno: apellidoMaterno.trim(),
+    email: emailLimpio,
+    servicio,
+    mensaje: mensaje.trim(),
+  };
+
+  try {
+    setEstaEnviando(true);
+
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contacto),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setErrorEnvio(data.message ?? "No se pudo enviar el formulario.");
+      return;
     }
+
+    console.log("Respuesta de la API:", data);
+
+    setFormularioEnviado(true);
+  } catch (error) {
+    console.error("Error al enviar formulario:", error);
+    setErrorEnvio("Ocurrió un error inesperado al enviar el formulario.");
+  } finally {
+    setEstaEnviando(false);
+  }
+}
     return (
         
  <form
@@ -229,18 +259,22 @@ const [formularioEnviado, setFormularioEnviado] = useState(false);
                 </div>
       </div>
 
-      <button
-        type="submit"
-        className="rounded-full bg-sky-500 px-8 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
-      >
-        Enviar mensaje
-      </button>
-      {formularioEnviado && (
-          <p className="rounded-xl border border-sky-500/40 bg-sky-500/10 px-4 py-3 text-sm text-sky-300">
-    Mensaje validado correctamente. Pronto podré conectarlo a una API para
-    guardar o enviar esta información.
-  </p>)
-  }
+<button
+  type="submit"
+  disabled={estaEnviando}
+  className="rounded-full bg-sky-500 px-8 py-3 font-semibold text-slate-950 transition hover:bg-sky-400 disabled:cursor-not-allowed disabled:opacity-60"
+>
+  {estaEnviando ? "Enviando..." : "Enviar mensaje"}
+</button>
+{errorEnvio && (
+    <p className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+    {errorEnvio}
+  </p>) }
+{formularioEnviado && (
+  <p className="rounded-xl border border-sky-500/40 bg-sky-500/10 px-4 py-3 text-sm text-sky-300">
+    Mensaje enviado correctamente. La API recibió y validó la información.
+  </p>
+)} 
     </form>
     );
 }
