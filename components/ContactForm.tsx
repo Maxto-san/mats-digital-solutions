@@ -94,6 +94,18 @@ async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     console.log("Respuesta de la API:", data);
 
     setFormularioEnviado(true);
+    setNombres("");
+    setApellidoPaterno("");
+    setApellidoMaterno("");
+    setEmail("");
+    setServicio("");
+    setMensaje("");
+
+    setNombresFueTocado(false);
+    setEmailFueTocado(false);
+    setServicioFueTocado(false);
+    setMensajeFueTocado(false);
+
   } catch (error) {
     console.error("Error al enviar formulario:", error);
     setErrorEnvio("Ocurrió un error inesperado al enviar el formulario.");
@@ -102,7 +114,7 @@ async function handleSubmit(event: FormEvent<HTMLFormElement>) {
   }
 }
     return (
-        
+       
  <form
         onSubmit={handleSubmit}
          className="mt-10 grid gap-6 rounded-3xl border border-slate-800 bg-slate-900/50 p-6">
