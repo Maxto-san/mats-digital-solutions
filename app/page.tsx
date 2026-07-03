@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import ServicesSection from "@/components/ServicesSection";
 
 
 export default function Home() {
@@ -66,7 +67,7 @@ export default function Home() {
     <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky-400">
       Sobre mí
     </p>
-
+    
     <h2 className="text-3xl font-bold text-white md:text-5xl">
       Construyendo experiencia real a través de proyectos prácticos.
     </h2>
@@ -94,6 +95,9 @@ export default function Home() {
   
 </div>
       </section>
+
+    <ServicesSection />
+    
     </main>
   );
 }
