@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import ServicesSection from "@/components/ServicesSection";
+import ProjectsSection from "@/components/ProjectsSection";
 
 
 export default function Home() {
@@ -61,13 +62,16 @@ export default function Home() {
   </div>
 </div>
       </section>
-      <section id="sobre-mi" className="mx-auto max-w-6xl px-6 pt-16 pb-24"> 
+      <section
+  id="sobre-mi"
+  className="mx-auto max-w-6xl scroll-mt-24 px-6 pt-16 pb-12 md:pb-16"
+>
         <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:items-center">
   <div>
     <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky-400">
       Sobre mí
     </p>
-    
+
     <h2 className="text-3xl font-bold text-white md:text-5xl">
       Construyendo experiencia real a través de proyectos prácticos.
     </h2>
@@ -97,7 +101,7 @@ export default function Home() {
       </section>
 
     <ServicesSection />
-    
+    <ProjectsSection />
     </main>
   );
 }

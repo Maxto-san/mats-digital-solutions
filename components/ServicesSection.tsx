@@ -4,7 +4,7 @@ export default function ServicesSection() {
     return (
      <section
       id="servicios"
-      className="mx-auto max-w-6xl scroll-mt-24 px-6 py-24"
+      className="mx-auto max-w-6xl scroll-mt-24 px-6 pt-12 pb-24 md:pt-16"
      >
      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky-400">
         Servicios
